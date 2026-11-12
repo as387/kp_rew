@@ -4,14 +4,14 @@ module clock_base #(
 ) (
     input wire clk_50Meg,
     input wire reset,
-    output wire clk_counter,
-    output wire clk_echo
+    output wire clk_counter,    // выход 1 МГц
+    output wire clk_echo        // выход 16 Гц
 );
     
-    reg [5:0] counter1;
-    reg [20:0] counter2;
-    reg out1;
-    reg out2;
+    reg [5:0] counter1;         // счетчик 1 МГц
+    reg [20:0] counter2;        // счетчик 16 Гц
+    reg out1;                   // регистр для выхода 1 МГц
+    reg out2;                   // регистр для выхода 16 Гц
 
     always @(posedge clk_50Meg or posedge reset) begin
 
@@ -24,7 +24,7 @@ module clock_base #(
 
             if (counter1 == clk_div1) begin
                 counter1 <= 6'd0;
-                out1 <= ~out1;
+                out1     <= ~out1;
             end else begin
                 counter1 <= counter1 + 6'd1;
             end
@@ -39,6 +39,6 @@ module clock_base #(
     end
 
     assign clk_counter = out1;
-    assign clk_echo = out2;
+    assign clk_echo    = out2;
 
 endmodule
